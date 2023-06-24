@@ -1,7 +1,6 @@
 {
   "name": "yarncast",
   "version": "1.0.0",
-  "description": "",
   "main": "webpack.config.js",
   "scripts": {
     "start": "node server/server.js",
@@ -38,5 +37,7 @@
     "react-dom": "^18.2.0",
     "react-native-web": "^0.19.5",
     "webpack": "^5.88.0"
-  }
+  },
+  "keywords": [],
+  "description": ""
 }
