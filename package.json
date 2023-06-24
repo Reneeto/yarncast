@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Reneeto/yarncast#readme",
   "devDependencies": {
     "css-loader": "^6.8.1",
+    "eslint-config-prettier": "^8.8.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.3",
     "node-sass": "^9.0.0",
