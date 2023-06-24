@@ -2,34 +2,32 @@
   "name": "yarncast",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "webpack.config.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --hot --open",
-    "build": "webpack --config webpack.config.js --mode production",
-    "dev": "webpack serve --open"
+    "build": "webpack"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Reneeto/yarncast.git"
+  },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "fs-promise": "^2.0.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+  "bugs": {
+    "url": "https://github.com/Reneeto/yarncast/issues"
+  },
+  "homepage": "https://github.com/Reneeto/yarncast#readme",
+  "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
+    "babel-loader": "^9.1.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   },
-  "devDependencies": {
-    "@babel/core": "^7.22.5",
-    "@babel/eslint-parser": "^7.22.5",
-    "@babel/preset-env": "^7.22.5",
-    "@babel/preset-react": "^7.22.5",
-    "babel-eslint": "^10.1.0",
-    "babel-loader": "^9.1.2",
-    "css-loader": "^6.8.1",
-    "file-loader": "^6.2.0",
-    "node-sass": "^9.0.0",
-    "sass-loader": "^13.3.2",
-    "style-loader": "^3.3.3",
+  "dependencies": {
+    "react-native-web": "^0.19.5",
     "webpack": "^5.88.0"
   }
 }

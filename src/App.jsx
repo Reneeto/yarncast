@@ -8,9 +8,9 @@ const App = () => {
   )
 }
 
-function App() {
-  return <div>here is a dummy component</div>
-}
+// function App() {
+//   return <div>here is a dummy component</div>
+// }
 
 
 export default App;
