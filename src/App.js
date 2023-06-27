@@ -1,10 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
-const App = () => (
-  <div>
-    <h1>Hello React!!!</h1>
-  </div>
-);
+const App = () => {
+  return (
+    <div>
+      <Header />
+      <Footer />
+    </div>
+  );
+};
 
 export default App;
