@@ -3,7 +3,6 @@ import React from "react";
 export default function Filters() {
   return (
     <div className="filters">
-      <DateRangeCalendar />
       <label for="location">Location:</label>
       <input id="location" type="text" />
       <label>Start Date:</label>
@@ -16,7 +15,6 @@ export default function Filters() {
       </select>
       <button type="button">Start Over</button>
       <button type="button">Generate</button>
-      {/* <button type="button">Export to PDF</button> */}
     </div>
   );
 }
