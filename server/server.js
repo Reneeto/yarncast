@@ -8,7 +8,7 @@ app.use('/build', express.static(path.join(__dirname, '../build')));
 
 
 app.get('/', (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, '../src/index.html'))
+  return res.status(200).sendFile(path.resolve(__dirname, '../src/index.html'));
 })
 
 app.listen(PORT, () => {
