@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --open",
+    "start": "nodemon server/server.js",
     "build": "webpack --mode production",
     "dev": "webpack --mode development && node server/server.js"
   },
