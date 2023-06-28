@@ -1,0 +1,38 @@
+{
+  "results": [
+    {
+      "id": 5640350,
+      "name": "Billings",
+      "latitude": 45.78329,
+      "longitude": -108.50069,
+      "elevation": 952.0,
+      "feature_code": "PPLA2",
+      "country_code": "US",
+      "admin1_id": 5667009,
+      "admin2_id": 5687489,
+      "timezone": "America/Denver",
+      "population": 110263,
+      "postcodes": [
+        "59101",
+        "59102",
+        "59103",
+        "59104",
+        "59105",
+        "59106",
+        "59107",
+        "59108",
+        "59111",
+        "59112",
+        "59114",
+        "59115",
+        "59116",
+        "59117"
+      ],
+      "country_id": 6252001,
+      "country": "United States",
+      "admin1": "Montana",
+      "admin2": "Yellowstone"
+    }
+  ],
+  "generationtime_ms": 0.6070137
+}
