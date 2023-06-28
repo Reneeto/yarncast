@@ -45,6 +45,7 @@
     "express": "^4.18.2",
     "mongoose": "^7.3.1",
     "react": "^18.2.0",
+    "react-datepicker": "^4.14.1",
     "react-dom": "^18.2.0",
     "react-native-web": "^0.19.5",
     "styled-components": "^5.3.11",

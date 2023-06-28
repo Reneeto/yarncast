@@ -1,39 +1,49 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function DatePicker() {
-  //declare states using useState
-  const [startDate, setStartDate] = useState("startDate");
+export default function TableDatePicker() {
+  const [startDate, setStartDate] = useState(new Date());
+  const [startDateString, setStartDateString] = useState("");
   const [endDate, setEndDate] = useState(new Date());
+  const [endDateString, setEndDateString] = useState("");
 
-  //format date into yyyy-mm-dd
-  // const formatDate = (date) => {
-  //   const test = new Date(date);
-  //   const formattedDate = test.toISOString().substring(0, 10);
-  //   setStartDate(formattedDate);
-  //   return;
-  // };
+  // format date into yyyy-mm-dd
+  const formatDate = (date) => {
 
-  {
-    return (
-      <div>
-        <h1>hello</h1>
-        {/* <DatePicker
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          selectsStart // tells this DatePicker that it is part of a range*
-          startDate={startDate}
-        /> */}
-        {/* <DatePicker
-          selected={endDate}
-          selectsEnd
-          startDate={startDate}
-          endDate={endDate}
-          minDate={startDate}
-          onChange={(date) => setEndDate(date)}
-        /> */}
-      </div>
-    );
-  }
+    const formattedDate = new Date(date).toISOString().substring(0, 10);
+    if (date === startDate) {
+      setStartDateString(formattedDate);
+    } else {
+      setEndDateString(formattedDate);
+    }
+
+    return;
+  };
+
+  const handleClick = () => {
+    formatDate(startDate);
+    formatDate(endDate);
+  };
+
+  return (
+    <div>
+      <DatePicker
+        selected={startDate}
+        selectsStart
+        startDate={startDate}
+        endDate={endDate} // add the endDate to your startDate DatePicker now that it is defined
+        onChange={(date) => setStartDate(date)}
+      />
+      <DatePicker
+        selected={endDate}
+        selectsEnd
+        startDate={startDate}
+        endDate={endDate}
+        minDate={startDate}
+        onChange={(date) => setEndDate(date)}
+      />
+      <button onClick={handleClick}>Click Me</button>
+    </div>
+  );
 }

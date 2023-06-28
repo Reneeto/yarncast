@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import ReactDOM from "react-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Filters from "./components/Filters";
 import Display from "./components/Display";
+import { format } from "prettier";
 
 const App = () => {
+  //declare states using useState
   const [coordinates, setCoordinates] = useState({
     results: [
       {
@@ -15,12 +19,20 @@ const App = () => {
     ],
   });
   const [location, setLocation] = useState("");
-  const [dates, setDates] = useState({
-    startDate: "2023-06-01",
-    endDate: "2023-06-02",
-  });
+  const [startDate, setStartDate] = useState('startDate');
+  const [endDate, setEndDate] = useState(new Date());
   const [weather, setWeather] = useState([]);
 
+  //format date into yyyy-mm-dd
+  // const formatDate = (date) => {
+  //   const test = new Date(date);
+  //   const formattedDate = test.toISOString().substring(0, 10);
+  //   setStartDate(formattedDate);
+  //   return;
+  // };
+
+
+  //get longitude and latitude from geolocation API
   const searchLocation = () => {
     fetch(
       `https://geocoding-api.open-meteo.com/v1/search?name=${location}&count=1&language=en&format=json`
@@ -33,10 +45,10 @@ const App = () => {
         console.log(err.message);
       });
   };
-  console.log();
+  //get weather data from coordinates and dates from historical weather API
   const getWeatherData = () => {
     fetch(
-      `https://archive-api.open-meteo.com/v1/archive?latitude=${coordinates.results[0].latitude}&longitude=${coordinates.results[0].longitude}&start_date=${dates.startDate}&end_date=${dates.endDate}&daily=temperature_2m_mean&timezone=GMT&temperature_unit=fahrenheit&min=2023-06-09&max=2023-06-23`
+      `https://archive-api.open-meteo.com/v1/archive?latitude=${coordinates.results[0].latitude}&longitude=${coordinates.results[0].longitude}&start_date=${startDate}&end_date=${endDate}&daily=temperature_2m_mean&timezone=GMT&temperature_unit=fahrenheit&min=2023-06-09&max=2023-06-23`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -47,7 +59,8 @@ const App = () => {
         console.log(err.message);
       });
   };
-
+ 
+  //API calls will fire on Enter
   const handleKeyDown = async (event) => {
     if (event.key === "Enter") {
       await searchLocation();
@@ -55,6 +68,7 @@ const App = () => {
     }
   };
 
+  //render the following
   {
     return (
       <div>
@@ -62,11 +76,24 @@ const App = () => {
           type="text"
           value={location}
           onChange={(event) => setLocation(event.target.value)}
-          // onKeyDown={searchLocation}
-          onKeyDown={handleKeyDown}
+          // onKeyDown={handleKeyDown}
           placeholder="Select Location"
           onfocus="this.value=''"
         />
+        <DatePicker
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+          selectsStart // tells this DatePicker that it is part of a range*
+          startDate={startDate}
+        />
+        {/* <DatePicker
+          selected={endDate}
+          selectsEnd
+          startDate={startDate}
+          endDate={endDate}
+          minDate={startDate}
+          onChange={(date) => setEndDate(date)}
+        /> */}
         <h2 className="location">{location}</h2>
         <h2>{weather}</h2>
         <h2 className="location">{coordinates.results[0].longitude}</h2>
