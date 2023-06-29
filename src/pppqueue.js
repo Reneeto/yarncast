@@ -9,33 +9,40 @@ function App() {
     const myPromises = [
       () =>
         new Promise(resolve =>
-          setTimeout(() => {
-            resolve();
-            console.log("First(slow)");
-          }, 5000)
+          console.log('first function')
         ),
       () =>
         new Promise(resolve =>
-          setTimeout(() => {
-            resolve();
-            console.log("Second(fast)");
-          }, 100)
+          console.log('second function')
         ),
       () =>
         new Promise(resolve =>
-          setTimeout(() => {
-            resolve();
-            console.log("Third(slower)");
-          }, 10000)
+          console.log('third function')
         )
     ];
 
     queue.addAll(myPromises);
   }, [queue]);
 
+  function returnCalls () {
+    () =>
+        new Promise(resolve =>
+          console.log('first function')
+        ),
+      () =>
+        new Promise(resolve =>
+          console.log('second function')
+        ),
+      () =>
+        new Promise(resolve =>
+          console.log('third function')
+        )
+  }
+
   return (
     <div>
       <h1>Promise queue with concurrency control</h1>
+      <button onClick={returnCalls}></button>
     </div>
   );
 }
