@@ -4,4 +4,4 @@ import App from "./App";
 import TableDatePicker from "./DatePicker";
 import ColorPicker from "./ColorPicker";
 
-ReactDOM.render(<ColorPicker />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));

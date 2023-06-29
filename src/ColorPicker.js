@@ -5,10 +5,9 @@ const temps = [
 import React, { useState, useEffect } from "react";
 
 export default function ColorPicker() {
-  //setState and initialize as object
   const [colors, setColors] = useState([]);
+
   function matchColors(tempsArr) {
-    console.log("matchColors firing");
     const rangeValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
     const colorsArr = [];
     tempsArr.forEach((el) => {
@@ -64,33 +63,13 @@ export default function ColorPicker() {
     });
     return setColors(colorsArr);
   }
- 
-  // let test;
-
-  // function renderColors(colorsObj) {
-  //   console.log("renderColors firing");
-  //   const rowArray = [];
-  //   for (let key in colors) {
-  //     // let row = <div></div>;
-  //     rowArray.push(colors[key]);
-  //   }
-  //   console.log(rowArray);
-  //   test = rowArray.map(row => (
-  //     <div style={{backgroundColor: row}}>{row}</div>
-  //   ))
-  //   console.log(test);
-  //   return test;
-  // }
-  
-console.log(colors);
 
   return (
     <div>
       <button onClick={() => matchColors(temps)}>Generate Colors</button>
-      <button onClick={() => renderColors(colors)}>See Colors</button>
       <div>
-        {colors.map(color => (
-          <div style={{backgroundColor: color}}>&nbsp;</div>
+        {colors.map((color) => (
+          <div style={{ backgroundColor: color }}>&nbsp;</div>
           // <g style={{backgroundColor: color}}>&nbsp;</g>
         ))}
       </div>
