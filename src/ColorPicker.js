@@ -1,60 +1,99 @@
 const temps = [
-  59.1, 63.5, 67.6, 62.1, 58.8, 58.8, 62.5, 61.9, 59.6, 59.76, 61.6, 63.1, 62.6,
+  59.1, 63.5, 67.6, 62.1, 58.8, 58.8, 62.5, 61.9, 59.6, 59.76, 61.6, 100, 0,
 ];
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function ColorPicker() {
   //setState and initialize as object
-  const [colors, setColors] = useState({});
-
-  
+  const [colors, setColors] = useState([]);
   function matchColors(tempsArr) {
+    console.log("matchColors firing");
     const rangeValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-    const colorsObj = {};
-
-    tempsArr.forEach(el) {
+    const colorsArr = [];
+    tempsArr.forEach((el) => {
       if (el < rangeValues[0]) {
         //navy
-        colorsObj[el] = '#1f2942';
-      }else if (el < rangeValues[1]) {
+        colorsArr.push("#041c5f");
+        // colorsArr[el] = "#041c5f";
+      } else if (el < rangeValues[1]) {
         //colonial blue
-        colorsObj[el] = '#388eba';
-      }else if (el < rangeValues[2]) {
-        colorsObj[el] = '#75c8a5';
-      }else if (el < rangeValues[3]) {
-
-        colorsObj[el] = 'Navy';
-      }else if (el < rangeValues[4]) {
-
-        colorsObj[el] = 'Navy';
-      }else if (el < rangeValues[5]) {
-
-        colorsObj[el] = 'Navy';
-      }else if (el < rangeValues[6]) {
-
-        colorsObj[el] = 'Navy';
-      }else if (el < rangeValues[7]) {
-
-        colorsObj[el] = 'Navy';
-      }else if (el < rangeValues[8]) {
-        return 'Mustard'
-        colorsObj[el] = 'Navy';
-      }else if (el < rangeValues[9]) {
-
-        colorsObj[el] = 'Navy';
-      }else if (el < rangeValues[10]) {
-
-        colorsObj[el] = 'Navy';
-      }else {
-
-        colorsObj[el] = 'Navy';
+        colorsArr.push("#3e64a8");
+        // colorsArr[el] = "#3e64a8";
+      } else if (el < rangeValues[2]) {
+        //sky blue
+        colorsArr.push("#72b1c4");
+        // colorsArr[el] = "#72b1c4";
+      } else if (el < rangeValues[3]) {
+        //silver blue
+        colorsArr.push("#cdd8de");
+        // colorsArr[el] = "#cdd8de";
+      } else if (el < rangeValues[4]) {
+        //dusty blue
+        colorsArr.push("#7192a4");
+        // colorsArr[el] = "#7192a4";
+      } else if (el < rangeValues[5]) {
+        //peacock
+        colorsArr.push("#046772");
+        // colorsArr[el] = "#046772";
+      } else if (el < rangeValues[6]) {
+        //Olive
+        colorsArr.push("#303723");
+        // colorsArr[el] = "#303723";
+      } else if (el < rangeValues[7]) {
+        //dusty green
+        colorsArr.push("#77784e");
+        // colorsArr[el] = "#77784e";
+      } else if (el < rangeValues[8]) {
+        //mustard
+        colorsArr.push("#d2ab4c");
+        // colorsArr[el] = "#d2ab4c";
+      } else if (el < rangeValues[9]) {
+        //rust
+        colorsArr.push("#a25a34");
+        // colorsArr[el] = "#a25a34";
+      } else if (el < rangeValues[10]) {
+        //terracotta
+        colorsArr.push("#c74722");
+        // colorsArr[el] = "#c74722";
+      } else {
+        //cranberry
+        colorsArr.push("#6f030f");
+        // colorsArr[el] = "#6f030f";
       }
-    }
+    });
+    return setColors(colorsArr);
   }
+ 
+  // let test;
+
+  // function renderColors(colorsObj) {
+  //   console.log("renderColors firing");
+  //   const rowArray = [];
+  //   for (let key in colors) {
+  //     // let row = <div></div>;
+  //     rowArray.push(colors[key]);
+  //   }
+  //   console.log(rowArray);
+  //   test = rowArray.map(row => (
+  //     <div style={{backgroundColor: row}}>{row}</div>
+  //   ))
+  //   console.log(test);
+  //   return test;
+  // }
+  
+console.log(colors);
 
   return (
     <div>
+      <button onClick={() => matchColors(temps)}>Generate Colors</button>
+      <button onClick={() => renderColors(colors)}>See Colors</button>
+      <div>
+        {colors.map(color => (
+          <div style={{backgroundColor: color}}>&nbsp;</div>
+          // <g style={{backgroundColor: color}}>&nbsp;</g>
+        ))}
+      </div>
     </div>
   );
 }
