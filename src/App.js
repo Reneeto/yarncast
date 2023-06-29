@@ -19,18 +19,11 @@ const App = () => {
     ],
   });
   const [location, setLocation] = useState("");
-  const [startDate, setStartDate] = useState('startDate');
-  const [endDate, setEndDate] = useState(new Date());
   const [weather, setWeather] = useState([]);
-
-  //format date into yyyy-mm-dd
-  // const formatDate = (date) => {
-  //   const test = new Date(date);
-  //   const formattedDate = test.toISOString().substring(0, 10);
-  //   setStartDate(formattedDate);
-  //   return;
-  // };
-
+  const [startDate, setStartDate] = useState(new Date());
+  const [startDateString, setStartDateString] = useState("");
+  const [endDate, setEndDate] = useState(new Date());
+  const [endDateString, setEndDateString] = useState("");
 
   //get longitude and latitude from geolocation API
   const searchLocation = () => {
@@ -48,7 +41,7 @@ const App = () => {
   //get weather data from coordinates and dates from historical weather API
   const getWeatherData = () => {
     fetch(
-      `https://archive-api.open-meteo.com/v1/archive?latitude=${coordinates.results[0].latitude}&longitude=${coordinates.results[0].longitude}&start_date=${startDate}&end_date=${endDate}&daily=temperature_2m_mean&timezone=GMT&temperature_unit=fahrenheit&min=2023-06-09&max=2023-06-23`
+      `https://archive-api.open-meteo.com/v1/archive?latitude=${coordinates.results[0].latitude}&longitude=${coordinates.results[0].longitude}&start_date=${startDateString}&end_date=${endDateString}&daily=temperature_2m_mean&timezone=GMT&temperature_unit=fahrenheit&min=2023-06-09&max=2023-06-23`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -59,16 +52,26 @@ const App = () => {
         console.log(err.message);
       });
   };
- 
-  //API calls will fire on Enter
-  const handleKeyDown = async (event) => {
-    if (event.key === "Enter") {
-      await searchLocation();
-      getWeatherData();
+
+  const formatDate = (date) => {
+    const formattedDate = new Date(date).toISOString().substring(0, 10);
+    if (date === startDate) {
+      setStartDateString(formattedDate);
+    } else {
+      setEndDateString(formattedDate);
     }
+
+    return;
   };
 
-  //render the following
+  const handleClick = async () => {
+    await formatDate(startDate);
+    await formatDate(endDate);
+    await searchLocation();
+    getWeatherData();
+  };
+
+
   {
     return (
       <div>
@@ -82,22 +85,24 @@ const App = () => {
         />
         <DatePicker
           selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          selectsStart // tells this DatePicker that it is part of a range*
+          selectsStart
           startDate={startDate}
+          endDate={endDate} // add the endDate to your startDate DatePicker now that it is defined
+          onChange={(date) => setStartDate(date)}
         />
-        {/* <DatePicker
+        <DatePicker
           selected={endDate}
           selectsEnd
           startDate={startDate}
           endDate={endDate}
           minDate={startDate}
           onChange={(date) => setEndDate(date)}
-        /> */}
-        <h2 className="location">{location}</h2>
-        <h2>{weather}</h2>
-        <h2 className="location">{coordinates.results[0].longitude}</h2>
-        <h2 className="location">{coordinates.results[0].latitude}</h2>
+        />
+        <button onClick={handleClick}>Click Me</button>
+        <h2 className="location">This is the location: {location}</h2>
+        <h2>This is the weather: {weather}</h2>
+        <h2 className="location">This is the longitude: {coordinates.results[0].longitude}</h2>
+        <h2 className="location">This is the latitude: {coordinates.results[0].latitude}</h2>
       </div>
     );
   }
