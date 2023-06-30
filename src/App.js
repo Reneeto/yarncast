@@ -1,12 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import ReactDOM from "react-dom";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Filters from "./components/Filters";
-import Display from "./components/Display";
-import { format } from "prettier";
+
 
 const App = () => {
   const [coordinates, setCoordinates] = useState({
