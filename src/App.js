@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ReactDOM from "react-dom";
@@ -9,8 +9,7 @@ import Display from "./components/Display";
 import { format } from "prettier";
 
 const App = () => {
-  //declare states using useState
-  const [coordinates, setCoordinates] = useState({
+    const [coordinates, setCoordinates] = useState({
     results: [
       {
         longitude: 0,
@@ -25,6 +24,10 @@ const App = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [endDateString, setEndDateString] = useState("");
   const [colors, setColors] = useState([]);
+
+  useEffect(() => {
+    console.log('useEffect');
+  }, [])
 
   //get longitude and latitude from geolocation API
   const searchLocation = () => {
@@ -168,8 +171,6 @@ const App = () => {
           endDate={endDate}
           minDate={startDate}
           onChange={(date) => setEndDate(date)}
-          // onChange={handleDates}
-          // onBlur={handleDates}
         />
         <h2 className="location">This is the location: {location}</h2>
         <h2>This is the weather: {weather}</h2>
@@ -180,7 +181,7 @@ const App = () => {
           This is the latitude: {coordinates.results[0].latitude}
         </h2>
         <div>
-          <button onClick={handleClick}>Click Me</button>
+          {/* <button onClick={handleClick}>Click Me</button> */}
           {/* <button onClick={() => matchColors(weather)}>Generate Colors</button> */}
           <div>
             {colors.map((color) => (
