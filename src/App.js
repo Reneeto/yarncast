@@ -9,7 +9,7 @@ import Display from "./components/Display";
 import { format } from "prettier";
 
 const App = () => {
-    const [coordinates, setCoordinates] = useState({
+  const [coordinates, setCoordinates] = useState({
     results: [
       {
         longitude: 0,
@@ -24,29 +24,51 @@ const App = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [endDateString, setEndDateString] = useState("");
   const [colors, setColors] = useState([]);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    console.log('useEffect');
-  }, [])
+    formatDate(startDate);
+    formatDate(endDate);
+  }, [startDate, endDate]);
 
-  //get longitude and latitude from geolocation API
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    getWeatherData(weather);
+  }, [endDate]);
+
+  //FIRST: get longitude and latitude from geolocation API
   const searchLocation = () => {
-    console.log('getting lon and lat');
+    console.log("getting lon and lat");
     fetch(
       `https://geocoding-api.open-meteo.com/v1/search?name=${location}&count=1&language=en&format=json`
     )
       .then((response) => response.json())
       .then((data) => {
         setCoordinates(data);
-
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
-  //get weather data from coordinates and dates from historical weather API
+
+  //SECOND: format start and end dates for API call
+  const formatDate = (date) => {
+    const formattedDate = new Date(date).toISOString().substring(0, 10);
+    if (date === startDate) {
+      setStartDateString(formattedDate);
+    } else {
+      setEndDateString(formattedDate);
+    }
+
+    return;
+  };
+
+  //THIRD: get weather data from coordinates and dates from historical weather API
   const getWeatherData = () => {
-    console.log('getting weather data');
+    console.log("getting weather data");
     fetch(
       `https://archive-api.open-meteo.com/v1/archive?latitude=${coordinates.results[0].latitude}&longitude=${coordinates.results[0].longitude}&start_date=${startDateString}&end_date=${endDateString}&daily=temperature_2m_mean&timezone=GMT&temperature_unit=fahrenheit&min=2023-06-09&max=2023-06-23`
     )
@@ -60,20 +82,9 @@ const App = () => {
       });
   };
 
-  const formatDate = (date) => {
-    console.log('formatting dates');
-    const formattedDate = new Date(date).toISOString().substring(0, 10);
-    if (date === startDate) {
-      setStartDateString(formattedDate);
-    } else {
-      setEndDateString(formattedDate);
-    }
-
-    return;
-  };
-
+  //FOURTH: match temps to color formulas
   function matchColors(tempsArr) {
-    console.log('matching colors');
+    console.log("matching colors");
     const rangeValues = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
     const colorsArr = [];
     tempsArr.forEach((el) => {
@@ -129,19 +140,14 @@ const App = () => {
     });
     return setColors(colorsArr);
   }
-  
+  //startRef and onKeyDown lets you tab from the startDate to endDate date picker
   const startRef = useRef();
 
   const onKeyDown = (e) => {
     if (e.keyCode === 9 || e.which === 9) {
-       startRef.current.setOpen(false);
+      startRef.current.setOpen(false);
     }
   };
-
-
-  /*HANDLING SEQUENTIAL CALLS ON BUTTON CLICK */
- 
-
 
   {
     return (
@@ -172,21 +178,22 @@ const App = () => {
           minDate={startDate}
           onChange={(date) => setEndDate(date)}
         />
-        <h2 className="location">This is the location: {location}</h2>
+        <h2>This is the location: {location}</h2>
+        <h2>This is the start date: {`${startDate}`}</h2>
+        <h2>This is the end date : {`${endDate}`}</h2>
+        <h2>This is the start date string: {`${startDateString}`}</h2>
+        <h2>This is the end date string: {`${endDateString}`}</h2>
+        <h2>This is the longitude: {coordinates.results[0].longitude}</h2>
+        <h2>This is the latitude: {coordinates.results[0].latitude}</h2>
         <h2>This is the weather: {weather}</h2>
-        <h2 className="location">
-          This is the longitude: {coordinates.results[0].longitude}
-        </h2>
-        <h2 className="location">
-          This is the latitude: {coordinates.results[0].latitude}
-        </h2>
         <div>
-          {/* <button onClick={handleClick}>Click Me</button> */}
-          {/* <button onClick={() => matchColors(weather)}>Generate Colors</button> */}
+          <button onClick={() => matchColors(weather)}>Generate Colors</button>
           <div>
             {colors.map((color) => (
-              <div style={{ backgroundColor: color }}>&nbsp;</div>
-              // <g style={{backgroundColor: color}}>&nbsp;</g>
+              <>
+                {/* <g style={{backgroundColor: color}}>&nbsp;</g> */}
+                <div style={{ backgroundColor: color }}>&nbsp;</div>
+              </>
             ))}
           </div>
         </div>
