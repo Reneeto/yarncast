@@ -146,42 +146,49 @@ const App = () => {
   {
     return (
       <div>
-        <input
-          type="text"
-          value={location}
-          onChange={(event) => setLocation(event.target.value)}
-          // onKeyDown={handleKeyDown}
-          placeholder="Select Location"
-          onfocus="this.value=''"
-          onBlur={searchLocation}
-        />
-        <DatePicker
-          selected={startDate}
-          selectsStart
-          startDate={startDate}
-          endDate={endDate} // add the endDate to your startDate DatePicker now that it is defined
-          onChange={(date) => setStartDate(date)}
-          ref={startRef}
-          onKeyDown={onKeyDown}
-        />
-        <DatePicker
-          selected={endDate}
-          selectsEnd
-          startDate={startDate}
-          endDate={endDate}
-          minDate={startDate}
-          onChange={(date) => setEndDate(date)}
-        />
-        <h2>This is the location: {location}</h2>
-        <h2>This is the start date: {`${startDate}`}</h2>
-        <h2>This is the end date : {`${endDate}`}</h2>
-        <h2>This is the start date string: {`${startDateString}`}</h2>
-        <h2>This is the end date string: {`${endDateString}`}</h2>
-        <h2>This is the longitude: {coordinates.results[0].longitude}</h2>
-        <h2>This is the latitude: {coordinates.results[0].latitude}</h2>
-        <h2>This is the weather: {weather}</h2>
-        <div>
+        <div className="header">
+          <img src="/assets/yarncast-logo.png" />
+        </div>
+        <div className="site-info">
+          <p>
+            Yarncast: a website that helps crafters visualize their temperature
+            blanket projects and make it easy to get the data they need to get
+            crafting.
+          </p>
+        </div>
+        <div className="filters">
+          <input
+            type="text"
+            value={location}
+            onChange={(event) => setLocation(event.target.value)}
+            // onKeyDown={handleKeyDown}
+            placeholder="Select Location"
+            onfocus="this.value=''"
+            onBlur={searchLocation}
+            className="location"
+          />
+          <DatePicker
+            selected={startDate}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate} // add the endDate to your startDate DatePicker now that it is defined
+            onChange={(date) => setStartDate(date)}
+            ref={startRef}
+            onKeyDown={onKeyDown}
+            className="start-date"
+          />
+          <DatePicker
+            selected={endDate}
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+            onChange={(date) => setEndDate(date)}
+            className="end-date"
+          />
           <button onClick={() => matchColors(weather)}>Generate Colors</button>
+        </div>
+        <div className="display">
           <div>
             {colors.map((color) => (
               <>
@@ -190,7 +197,21 @@ const App = () => {
               </>
             ))}
           </div>
+          <img src="/assets/placeholder-with-text.png" />
+          <button onClick={() => matchColors(weather)}>Generate Colors</button>
         </div>
+        <div className="footer">
+          <p>© 2023 yarncast</p>
+        </div>
+        {/* <h2>This is the location: {location}</h2>
+        <h2>This is the start date: {`${startDate}`}</h2>
+        <h2>This is the end date : {`${endDate}`}</h2>
+        <h2>This is the start date string: {`${startDateString}`}</h2>
+        <h2>This is the end date string: {`${endDateString}`}</h2>
+        <h2>This is the longitude: {coordinates.results[0].longitude}</h2>
+        <h2>This is the latitude: {coordinates.results[0].latitude}</h2>
+        <h2>This is the weather: {weather}</h2> */}
+        <div></div>
       </div>
     );
   }
