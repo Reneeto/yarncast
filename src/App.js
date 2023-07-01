@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import logo from "../assets/yarncast-logo.png";
+import placeholder from "../assets/placeholder-with-text.png";
 
 const App = () => {
   const [coordinates, setCoordinates] = useState({
@@ -64,12 +66,12 @@ const App = () => {
   const getWeatherData = () => {
     console.log("getting weather data");
     fetch(
-      `https://archive-api.open-meteo.com/v1/archive?latitude=${coordinates.results[0].latitude}&longitude=${coordinates.results[0].longitude}&start_date=${startDateString}&end_date=${endDateString}&daily=temperature_2m_mean&timezone=GMT&temperature_unit=fahrenheit&min=2023-06-09&max=2023-06-23`
+      `https://archive-api.open-meteo.com/v1/archive?latitude=${coordinates.results[0].latitude}&longitude=${coordinates.results[0].longitude}&start_date=${startDateString}&end_date=${endDateString}&daily=temperature_2m_max&timezone=GMT&temperature_unit=fahrenheit&min=2023-06-09&max=2023-06-23`
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.daily.temperature_2m_mean);
-        setWeather(data.daily.temperature_2m_mean);
+        console.log(data.daily.temperature_2m_max);
+        setWeather(data.daily.temperature_2m_max);
       })
       .catch((err) => {
         console.log(err.message);
@@ -83,52 +85,52 @@ const App = () => {
     const colorsArr = [];
     tempsArr.forEach((el) => {
       if (el < rangeValues[0]) {
-        //navy
-        colorsArr.push("#041c5f");
+        //0-
+        colorsArr.push("#62767d");
         // colorsArr[el] = "#041c5f";
       } else if (el < rangeValues[1]) {
-        //colonial blue
-        colorsArr.push("#3e64a8");
+        //0-9
+        colorsArr.push("#84928a");
         // colorsArr[el] = "#3e64a8";
       } else if (el < rangeValues[2]) {
-        //sky blue
-        colorsArr.push("#72b1c4");
+        //10-19
+        colorsArr.push("#a6ae96");
         // colorsArr[el] = "#72b1c4";
       } else if (el < rangeValues[3]) {
-        //silver blue
-        colorsArr.push("#cdd8de");
+        //20-29
+        colorsArr.push("#626665");
         // colorsArr[el] = "#cdd8de";
       } else if (el < rangeValues[4]) {
-        //dusty blue
-        colorsArr.push("#7192a4");
+        //30-39
+        colorsArr.push("#65684d");
         // colorsArr[el] = "#7192a4";
       } else if (el < rangeValues[5]) {
-        //peacock
-        colorsArr.push("#046772");
+        //40-49
+        colorsArr.push("#f6f0e2");
         // colorsArr[el] = "#046772";
       } else if (el < rangeValues[6]) {
-        //Olive
-        colorsArr.push("#303723");
+        //50-59
+        colorsArr.push("#ecdec7");
         // colorsArr[el] = "#303723";
       } else if (el < rangeValues[7]) {
-        //dusty green
-        colorsArr.push("#77784e");
+        //60-69
+        colorsArr.push("#d8beaf");
         // colorsArr[el] = "#77784e";
       } else if (el < rangeValues[8]) {
-        //mustard
-        colorsArr.push("#d2ab4c");
+        //70-79
+        colorsArr.push("#c4aa99");
         // colorsArr[el] = "#d2ab4c";
       } else if (el < rangeValues[9]) {
-        //rust
-        colorsArr.push("#a25a34");
+        //80-89
+        colorsArr.push("#d2b083");
         // colorsArr[el] = "#a25a34";
       } else if (el < rangeValues[10]) {
-        //terracotta
-        colorsArr.push("#c74722");
+        //90-99
+        colorsArr.push("#725654");
         // colorsArr[el] = "#c74722";
       } else {
-        //cranberry
-        colorsArr.push("#6f030f");
+        //100+
+        colorsArr.push("#513438");
         // colorsArr[el] = "#6f030f";
       }
     });
@@ -145,18 +147,21 @@ const App = () => {
 
   {
     return (
-      <div>
-        <div className="header">
-          <img src="/assets/yarncast-logo.png" />
-        </div>
-        <div className="site-info">
+      <div className="container">
+        <div className="header" id="header">
+          <img src={logo} alt="yarncast-logo" width={"100px"} />
           <p>
-            Yarncast: a website that helps crafters visualize their temperature
-            blanket projects and make it easy to get the data they need to get
-            crafting.
+            A website that helps crafters visualize their temperature blanket
+            projects
+            <br /> and make it easy to get the data they need to get crafting.
           </p>
         </div>
-        <div className="filters">
+        <div id="filters">
+          <p>
+            Pick a location and choose from when you want historical weather
+            data.
+          </p>
+          <label>Search by city or ZIP code</label>
           <input
             type="text"
             value={location}
@@ -165,8 +170,9 @@ const App = () => {
             placeholder="Select Location"
             onfocus="this.value=''"
             onBlur={searchLocation}
-            className="location"
+            className="inputs"
           />
+          <label>Enter Start Date</label>
           <DatePicker
             selected={startDate}
             selectsStart
@@ -175,8 +181,9 @@ const App = () => {
             onChange={(date) => setStartDate(date)}
             ref={startRef}
             onKeyDown={onKeyDown}
-            className="start-date"
+            className="inputs"
           />
+          <label>Enter End Date</label>
           <DatePicker
             selected={endDate}
             selectsEnd
@@ -184,12 +191,19 @@ const App = () => {
             endDate={endDate}
             minDate={startDate}
             onChange={(date) => setEndDate(date)}
-            className="end-date"
+            className="inputs"
           />
-          <button onClick={() => matchColors(weather)}>Generate Colors</button>
+          <div className="buttons">
+            <button onClick={() => matchColors(weather)} className="inputs">
+              Generate Colors
+            </button>
+            <button className="inputs">
+              Export to PDF
+            </button>
+          </div>
         </div>
-        <div className="display">
-          <div>
+        <div className="display" id="display">
+          <div className="visualization">
             {colors.map((color) => (
               <>
                 {/* <g style={{backgroundColor: color}}>&nbsp;</g> */}
@@ -197,10 +211,9 @@ const App = () => {
               </>
             ))}
           </div>
-          <img src="/assets/placeholder-with-text.png" />
-          <button onClick={() => matchColors(weather)}>Generate Colors</button>
+          <img src={placeholder} alt="placeholder image" width={"100px"} />
         </div>
-        <div className="footer">
+        <div className="footer" id="footer">
           <p>© 2023 yarncast</p>
         </div>
         {/* <h2>This is the location: {location}</h2>
@@ -211,7 +224,6 @@ const App = () => {
         <h2>This is the longitude: {coordinates.results[0].longitude}</h2>
         <h2>This is the latitude: {coordinates.results[0].latitude}</h2>
         <h2>This is the weather: {weather}</h2> */}
-        <div></div>
       </div>
     );
   }
