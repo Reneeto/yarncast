@@ -5,6 +5,9 @@ import logo from "../assets/yarncast-logo.png";
 import placeholder from "../assets/placeholder-with-text.png";
 
 const App = () => {
+  const displayImage = (
+    <img src={placeholder} alt="placeholder image" />
+  );
   const [coordinates, setCoordinates] = useState({
     results: [
       {
@@ -20,8 +23,8 @@ const App = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [endDateString, setEndDateString] = useState("");
   const [colors, setColors] = useState([]);
+  const [displayChildren, setDisplayChildren] = useState([displayImage]);
   const isFirstRender = useRef(true);
-
   useEffect(() => {
     formatDate(startDate);
     formatDate(endDate);
@@ -34,6 +37,14 @@ const App = () => {
     }
     getWeatherData(weather);
   }, [endDate]);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    matchColors(weather);
+  }, [weather]);
 
   //FIRST: get longitude and latitude from geolocation API
   const searchLocation = () => {
@@ -145,6 +156,26 @@ const App = () => {
     }
   };
 
+  const Blanket = () => {
+    return (
+      <div className="blanket">
+        {colors.map((color) => (
+          <>
+            {/* <g style={{backgroundColor: color}}>&nbsp;</g> */}
+            <div style={{ backgroundColor: color }}>&nbsp;</div>
+          </>
+        ))}
+      </div>
+    );
+  };
+
+  const handleClick = (event) => {
+    setDisplayChildren(displayChildren.pop());
+    setDisplayChildren(
+      displayChildren.concat(<Blanket key={displayChildren.length} />)
+    );
+  };
+
   {
     return (
       <div className="container">
@@ -157,10 +188,7 @@ const App = () => {
           </p>
         </div>
         <div id="filters">
-          <p>
-            Pick a location and choose from when you want historical weather
-            data.
-          </p>
+          <p>Choose your temperature blanket location and date range.</p>
           <label>Search by city or ZIP code</label>
           <input
             type="text"
@@ -194,24 +222,15 @@ const App = () => {
             className="inputs"
           />
           <div className="buttons">
-            <button onClick={() => matchColors(weather)} className="inputs">
+            <button onClick={() => handleClick()} className="inputs">
               Generate Colors
             </button>
-            <button className="inputs">
-              Export to PDF
-            </button>
+            <button className="inputs">Export to PDF</button>
           </div>
         </div>
         <div className="display" id="display">
-          <div className="visualization">
-            {colors.map((color) => (
-              <>
-                {/* <g style={{backgroundColor: color}}>&nbsp;</g> */}
-                <div style={{ backgroundColor: color }}>&nbsp;</div>
-              </>
-            ))}
-          </div>
-          <img src={placeholder} alt="placeholder image" width={"100px"} />
+          {displayChildren}
+          {/* <img src={placeholder} alt="placeholder image" width={"100px"} /> */}
         </div>
         <div className="footer" id="footer">
           <p>© 2023 yarncast</p>
