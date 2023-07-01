@@ -5,6 +5,7 @@ import logo from "../assets/yarncast-logo.png";
 import placeholder from "../assets/placeholder-with-text.png";
 
 const App = () => {
+  let isDisabled = true;
   const displayImage = <img src={placeholder} alt="placeholder image" />;
   const Blanket = () => {
     return (
@@ -47,7 +48,13 @@ const App = () => {
       return;
     }
     getWeatherData(weather);
+    isDisabled = true;
   }, [endDate]);
+  
+  useEffect(() => {
+    isDisabled = true;
+    return;
+  }, [location]);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -220,10 +227,10 @@ const App = () => {
             className="inputs"
           />
           <div className="buttons">
-            <button onClick={() => handleClick()} className="inputs">
+            <button disabled={!location} onClick={() => handleClick()} className="inputs">
               Generate Colors
             </button>
-            <button className="inputs">Export to PDF</button>
+            <button disabled={!location} className="inputs">Export to PDF</button>
           </div>
         </div>
         <div className="display" id="display">

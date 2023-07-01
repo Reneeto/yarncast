@@ -85,12 +85,20 @@ $gray: #626665;
 
 button {
   background-color: $blue;
-  border-radius: 0px;
   color: #fff;
   text-align: center;
-  text-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
+  text-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
   font-family: $karla;
-  border: none;
+}
+
+button:hover {
+  background-color: $olive;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+button:disabled {
+  background-color: $gray;
+  opacity: 50%;
 }
 
 #display {
@@ -111,7 +119,7 @@ button {
   }
 
   .row {
-    height: 1.5px; 
+    height: 1.5px;
   }
 }
 
