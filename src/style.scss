@@ -121,6 +121,7 @@ button:disabled {
   .row {
     height: 1.5px;
   }
+
 }
 
 #footer {
@@ -135,4 +136,19 @@ button:disabled {
     text-align: center;
     font-family: $karla;
   }
+}
+
+@keyframes fadeInFromTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px); /* Start 50 pixels above */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* End at the original position */
+  }
+}
+
+.image-fade-in {
+  animation: fadeInFromTop 1s;
 }

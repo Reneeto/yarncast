@@ -6,17 +6,21 @@ import placeholder from "../assets/placeholder-with-text.png";
 
 const App = () => {
   let isDisabled = true;
-  const displayImage = <img src={placeholder} alt="placeholder image" />;
+  const displayImage = (
+    <img src={placeholder} alt="placeholder image" className="image-fade-in" />
+  );
   const Blanket = () => {
     return (
       <div className="blanket">
-          {colors.map((color) => (
-            <>
-              {/* <g className="g-elements" x1="50" y1="0" x2="50" y2="300" style={{ backgroundColor: color }}>&nbsp;</g> */}
+        {colors.map((color) => (
+          <>
+            {/* <g className="g-elements" x1="50" y1="0" x2="50" y2="300" style={{ backgroundColor: color }}>&nbsp;</g> */}
 
-              <div className="row" style={{ backgroundColor: color }}>&nbsp;</div>
-            </>
-          ))}
+            <div className="row" style={{ backgroundColor: color }}>
+              &nbsp;
+            </div>
+          </>
+        ))}
       </div>
     );
   };
@@ -50,7 +54,7 @@ const App = () => {
     getWeatherData(weather);
     isDisabled = true;
   }, [endDate]);
-  
+
   useEffect(() => {
     isDisabled = true;
     return;
@@ -123,11 +127,11 @@ const App = () => {
         // colorsArr[el] = "#3e64a8";
       } else if (el < rangeValues[2]) {
         //10-19
-        colorsArr.push("#a6ae96");
+        colorsArr.push("#858F7E");
         // colorsArr[el] = "#72b1c4";
       } else if (el < rangeValues[3]) {
         //20-29
-        colorsArr.push("#626665");
+        colorsArr.push("#868B72");
         // colorsArr[el] = "#cdd8de";
       } else if (el < rangeValues[4]) {
         //30-39
@@ -135,7 +139,7 @@ const App = () => {
         // colorsArr[el] = "#7192a4";
       } else if (el < rangeValues[5]) {
         //40-49
-        colorsArr.push("#f6f0e2");
+        colorsArr.push("#A9A38A");
         // colorsArr[el] = "#046772";
       } else if (el < rangeValues[6]) {
         //50-59
@@ -143,15 +147,15 @@ const App = () => {
         // colorsArr[el] = "#303723";
       } else if (el < rangeValues[7]) {
         //60-69
-        colorsArr.push("#d8beaf");
+        colorsArr.push("#E2CEBB");
         // colorsArr[el] = "#77784e";
       } else if (el < rangeValues[8]) {
         //70-79
-        colorsArr.push("#c4aa99");
+        colorsArr.push("#d8beaf");
         // colorsArr[el] = "#d2ab4c";
       } else if (el < rangeValues[9]) {
         //80-89
-        colorsArr.push("#d2b083");
+        colorsArr.push("#A58A82");
         // colorsArr[el] = "#a25a34";
       } else if (el < rangeValues[10]) {
         //90-99
@@ -185,7 +189,7 @@ const App = () => {
     return (
       <div className="container">
         <div className="header" id="header">
-          <img src={logo} alt="yarncast-logo" width={"100px"} />
+          <img src={logo} alt="yarncast-logo" className="image-fade-in" />
           <p>
             A website that helps crafters visualize their temperature blanket
             projects
@@ -227,27 +231,32 @@ const App = () => {
             className="inputs"
           />
           <div className="buttons">
-            <button disabled={!location} onClick={() => handleClick()} className="inputs">
+            <button
+              disabled={!location}
+              onClick={() => handleClick()}
+              className="inputs"
+            >
               Generate Colors
             </button>
-            <button disabled={!location} className="inputs">Export to PDF</button>
+            <button disabled={!location} className="inputs">
+              Export to PDF
+            </button>
           </div>
         </div>
         <div className="display" id="display">
           {displayChildren}
-          {/* <img src={placeholder} alt="placeholder image" width={"100px"} /> */}
+          {/* <h2>This is the location: {location}</h2>
+          <h2>This is the start date: {`${startDate}`}</h2>
+          <h2>This is the end date : {`${endDate}`}</h2>
+          <h2>This is the start date string: {`${startDateString}`}</h2>
+          <h2>This is the end date string: {`${endDateString}`}</h2>
+          <h2>This is the longitude: {coordinates.results[0].longitude}</h2>
+          <h2>This is the latitude: {coordinates.results[0].latitude}</h2>
+          <h2>This is the weather: {weather}</h2> */}
         </div>
         <div className="footer" id="footer">
           <p>© 2023 yarncast</p>
         </div>
-        {/* <h2>This is the location: {location}</h2>
-        <h2>This is the start date: {`${startDate}`}</h2>
-        <h2>This is the end date : {`${endDate}`}</h2>
-        <h2>This is the start date string: {`${startDateString}`}</h2>
-        <h2>This is the end date string: {`${endDateString}`}</h2>
-        <h2>This is the longitude: {coordinates.results[0].longitude}</h2>
-        <h2>This is the latitude: {coordinates.results[0].latitude}</h2>
-        <h2>This is the weather: {weather}</h2> */}
       </div>
     );
   }
