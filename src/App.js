@@ -5,9 +5,20 @@ import logo from "../assets/yarncast-logo.png";
 import placeholder from "../assets/placeholder-with-text.png";
 
 const App = () => {
-  const displayImage = (
-    <img src={placeholder} alt="placeholder image" />
-  );
+  const displayImage = <img src={placeholder} alt="placeholder image" />;
+  const Blanket = () => {
+    return (
+      <div className="blanket">
+          {colors.map((color) => (
+            <>
+              {/* <g className="g-elements" x1="50" y1="0" x2="50" y2="300" style={{ backgroundColor: color }}>&nbsp;</g> */}
+
+              <div className="row" style={{ backgroundColor: color }}>&nbsp;</div>
+            </>
+          ))}
+      </div>
+    );
+  };
   const [coordinates, setCoordinates] = useState({
     results: [
       {
@@ -154,19 +165,6 @@ const App = () => {
     if (e.keyCode === 9 || e.which === 9) {
       startRef.current.setOpen(false);
     }
-  };
-
-  const Blanket = () => {
-    return (
-      <div className="blanket">
-        {colors.map((color) => (
-          <>
-            {/* <g style={{backgroundColor: color}}>&nbsp;</g> */}
-            <div style={{ backgroundColor: color }}>&nbsp;</div>
-          </>
-        ))}
-      </div>
-    );
   };
 
   const handleClick = (event) => {
