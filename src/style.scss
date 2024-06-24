@@ -76,9 +76,9 @@ $gray: #626665;
   }
 
   .buttons {
-    padding-top: 150px;
+    padding-top: 200px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: end;
   }
 }

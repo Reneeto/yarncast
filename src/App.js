@@ -238,9 +238,9 @@ const App = () => {
             >
               Generate Colors
             </button>
-            <button disabled={!location} className="inputs">
+            {/* <button disabled={!location} className="inputs">
               Export to PDF
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="display" id="display">
